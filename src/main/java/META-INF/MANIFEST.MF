@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: ru.altm.App
+Class-Path: nanohttpd-2.2.0.jar
+

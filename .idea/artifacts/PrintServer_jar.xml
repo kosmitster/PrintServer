@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact name="PrintServer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PrintServer_jar</output-path>
+    <root id="root">
+      <element id="archive" name="PrintServer.jar">
+        <element id="module-output" name="PrintServer" />
+      </element>
+      <element id="library" level="project" name="Maven: org.nanohttpd:nanohttpd:2.2.0" />
+    </root>
+  </artifact>
+</component>
