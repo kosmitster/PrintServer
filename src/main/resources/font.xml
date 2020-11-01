@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fontFamilies>
+
+    <fontFamily name="C39HrP48DlTt">
+        <normal>C39HrP48DlTt.ttf</normal>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="DejaVu Sans">
+        <normal>DejaVuSans.ttf</normal>
+        <bold>DejaVuSans-Bold.ttf</bold>
+        <italic>DejaVuSans-Oblique.ttf</italic>
+        <boldItalic>DejaVuSans-BoldOblique.ttf</boldItalic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+        <exportFonts>
+            <export key="net.sf.jasperreports.html">'DejaVu Sans', Arial, Helvetica, sans-serif</export>
+        </exportFonts>
+        <locales>
+            <locale>en_US</locale>
+            <locale>ru_RU</locale>
+        </locales>
+    </fontFamily>
+
+</fontFamilies>
+
+
