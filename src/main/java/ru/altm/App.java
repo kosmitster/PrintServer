@@ -2,6 +2,7 @@ package ru.altm;
 
 import fi.iki.elonen.NanoHTTPD;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import java.io.*;
@@ -23,7 +24,7 @@ public class App extends NanoHTTPD {
     static String password;
 
     public App() throws IOException {
-        super(8080);
+        super(App.port);
         start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
         System.out.println("\nPrint Service работает! порт " + App.port + "\n");
     }
@@ -51,7 +52,7 @@ public class App extends NanoHTTPD {
         final Map<String, String> params = session.getParms();
         for (Map.Entry<String, String> item : params.entrySet()) hm.put(item.getKey(), item.getValue());
 
-        /*Получаю подключение к базе данных*/
+        //Получаю подключение к базе данных
         final Connection connection;
         try {
             connection = DriverManager.getConnection(App.jdbcUrl, App.username, App.password);
@@ -61,6 +62,8 @@ public class App extends NanoHTTPD {
             return newFixedLengthResponse(
                     Response.Status.BAD_REQUEST, MIME_PLAINTEXT, errors.toString());
         }
+
+        final boolean isXls = params.containsKey("xls");
 
         if (connection != null) {
 
@@ -73,11 +76,20 @@ public class App extends NanoHTTPD {
                 jasPrint = JasperFillManager.fillReport(jasperReport, hm, connection);
 
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                if(isXls)
+                {
+                    JRXlsExporter exporter = new JRXlsExporter();
+                    exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasPrint);
+                    exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputStream);
 
-                JasperExportManager.exportReportToPdfStream(jasPrint, outputStream);
+                    exporter.exportReport();
 
-                return HttpTool.getPdfResponce(Response.Status.OK, outputStream);
+                    return HttpTool.getXlsResponse(Response.Status.OK, outputStream);
+                }else {
 
+                    JasperExportManager.exportReportToPdfStream(jasPrint, outputStream);
+                    return HttpTool.getPdfResponse(Response.Status.OK, outputStream);
+                }
 
             } catch (JRException e) {
 
